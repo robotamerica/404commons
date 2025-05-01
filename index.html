@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>404 Commons – The Grove</title>
+  <link rel="stylesheet" href="styles/grove.css">
+  <link rel="icon" href="data:image/svg+xml,
+  %3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E
+  %3Ctext y='.9em' font-size='90'%3E🌳%3C/text%3E
+  %3C/svg%3E">
+</head>
+<body>
+  <h1>🌳 The Grove</h1>
+
+  <section class="tree-intro">
+    <p>This is a grove: a quiet index of seeds. Each seed is a standalone HTML page, planted by a person. A seed has no timeline, no feed, and no algorithm. If you are lost, check out the <a href="https://github.com/robotamerica/404commons/blob/main/readme.md">readme.md</a>.</p>
+  </section>
+
+  <section class="tree-section">
+    <h2>🖇 Linked Seeds</h2>
+    <ul id="seed-list"></ul>
+    <p><a href="#" onclick="sproutRandom()">🌱 Visit a random seed</a></p>
+  </section>
+ 
+
+  <footer class="tree-footer">
+    <p>Want to sprout 🌱 your own seed?</p>
+    <p>Create a single HTML file. Style it how you like. <a href="https://github.com/robotamerica/404commons/blob/main/hosting-guide.md">Host it anywhere.</a></p>
+    <p>Email your seed link, title, and description to 
+       <a id="email-link" href="#">Loading email…</a>.</p>
+    <p class="dim">The Grove grows every which way.</p>
+    <p style="margin-top: 2rem;">
+      <a href="https://github.com/robotamerica/404commons/" 
+         target="_blank" 
+         rel="noopener noreferrer"
+         style="text-decoration: none; color: #666;">
+        🐙 View Source on GitHub
+      </a>
+  </footer>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const user = "seed";
+      const domain = "404commons.com";
+      const email = user + "@" + domain;
+      const link = document.getElementById("email-link");
+      link.setAttribute("href", "mailto:" + email + "?subject=Subscribe");
+      link.textContent = email;
+    });
+  </script>
+  <script>
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+  
+    async function loadSeeds() {
+      const list = document.getElementById('seed-list');
+      const res = await fetch('seeds.json');
+      const seeds = await res.json();
+      const visibleSeeds = shuffle(seeds.filter(seed => !seed.hidden)).slice(0, 6);
+  
+      for (const seed of visibleSeeds) {
+        const li = document.createElement('li');
+  
+        // Local .html page
+        if (seed.url.endsWith('.html')) {
+          li.innerHTML = `<a href="${seed.url}">${seed.label}</a> — ${seed.description}`;
+        } 
+        // Remote node (assumes commons.json)
+        else if (seed.url.startsWith('http')) {
+        try {
+          const commons = await fetch(seed.url + 'commons.json').then(r => r.json());
+          const name = commons.name || 'Unnamed Node';
+          const alias = commons.alias ? ` (${commons.alias})` : '';
+          const desc = commons.desc || '';
+          li.innerHTML = `<a href="${seed.url}">${name}${alias}</a> — ${desc}`;
+        } catch (err) {
+          // If commons.json not found, fallback to seed.label + seed.description
+          li.innerHTML = `<a href="${seed.url}">${seed.label}</a> — ${seed.description}`;
+        }
+      }
+
+  
+        list.appendChild(li);
+      }
+    }
+  
+    function sproutRandom() {
+  fetch('seeds.json')
+    .then(res => res.json())
+    .then(seeds => {
+      const index = Math.floor(Math.random() * seeds.length);
+      const seed = seeds[index];
+      window.location.href = seed.url;
+    });
+}
+  
+    // Run on load
+    loadSeeds();
+  </script>
+</body>
+</html>

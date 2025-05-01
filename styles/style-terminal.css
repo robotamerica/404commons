@@ -1,0 +1,68 @@
+/* Base reset and layout */
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: #000;
+  color: #ffbf00;
+  font-family: "Courier New", Courier, monospace;
+  padding: 2rem 1.5rem;
+  max-width: 70ch;
+  margin: auto;
+  white-space: pre-wrap;
+  line-height: 1.6;
+  font-size: 1.05rem;
+}
+
+/* Headings */
+h1, h2 {
+  color: #ffaa00;
+  font-weight: bold;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Links */
+a {
+  color: #ffff66;
+  text-decoration: underline;
+  word-break: break-word;
+}
+
+/* Lists */
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+ul li::before {
+  content: "> ";
+  color: #ffdd44;
+}
+
+/* Footer */
+footer {
+  margin-top: 4rem;
+  font-size: 0.9em;
+  color: #ffaa00;
+  text-align: center;
+  padding-bottom: 2rem;
+  font-family: monospace;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  body {
+    padding: 1.5rem 1rem;
+    font-size: 1rem;
+  }
+
+  h1, h2 {
+    font-size: 1.3rem;
+  }
+}

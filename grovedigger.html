@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>grovedigger</title>
+  <style>
+    body {
+      background: #e6b4b4;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .letter {
+      font-family: 'Franklin Gothic Medium';
+      font-size: 10rem;
+      font-weight: bolder;
+      color: #000000;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(270deg, red, orange, yellow, green, cyan, blue, violet, red);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: rainbow 10s linear infinite;
+      cursor: grab;
+      user-select: none;
+    }
+
+    @keyframes rainbow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="letters-container"></div>
+
+<script>
+  const text = "grovedigger";
+  const container = document.getElementById("letters-container");
+
+  [...text].forEach((char, i) => {
+    const span = document.createElement("span");
+    span.textContent = char;
+    span.classList.add("letter");
+    span.style.position = "absolute";
+    span.style.top = `${30 + i * 6}%`;
+    span.style.left = `${30 + i * 5}%`;
+    container.appendChild(span);
+
+    let offsetX = 0, offsetY = 0, dragging = false;
+
+    // Desktop Drag
+    span.addEventListener("mousedown", e => {
+      dragging = true;
+      offsetX = e.clientX - span.offsetLeft;
+      offsetY = e.clientY - span.offsetTop;
+      span.style.cursor = "grabbing";
+    });
+
+    document.addEventListener("mousemove", e => {
+      if (!dragging) return;
+      span.style.left = `${e.clientX - offsetX}px`;
+      span.style.top = `${e.clientY - offsetY}px`;
+    });
+
+    document.addEventListener("mouseup", () => {
+      dragging = false;
+      span.style.cursor = "grab";
+    });
+
+    // Mobile Touch Drag
+    span.addEventListener("touchstart", e => {
+      if (e.touches.length === 1) {
+        const touch = e.touches[0];
+        offsetX = touch.clientX - span.offsetLeft;
+        offsetY = touch.clientY - span.offsetTop;
+        dragging = true;
+        span.style.cursor = "grabbing";
+      }
+    });
+
+    document.addEventListener("touchmove", e => {
+      if (!dragging || e.touches.length !== 1) return;
+      const touch = e.touches[0];
+      span.style.left = `${touch.clientX - offsetX}px`;
+      span.style.top = `${touch.clientY - offsetY}px`;
+    });
+
+    document.addEventListener("touchend", () => {
+      dragging = false;
+      span.style.cursor = "grab";
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>hidden grove</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #eaf6e0;
+      font-size: 2rem;
+      font-family: sans-serif;
+      user-select: none;
+    }
+
+    .tree {
+      position: absolute;
+      font-size: 2.5rem;
+      cursor: grab;
+      transition: transform 0.1s ease;
+    }
+
+    .tree:active {
+      cursor: grabbing;
+    }
+
+    .label {
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      font-size: 1rem;
+      color: #666;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+
+<div class="label">🪵 You’ve found the hidden grove. Stick around a while, bathe in this small forest.</div>
+
+<script>
+  const emojis = ['🌲','🌳','🌴','🪵','🌵','🍄','🌿','🍁','🍃'];
+  const forestSize = 150;
+  const body = document.body;
+
+  for (let i = 0; i < forestSize; i++) {
+    const tree = document.createElement('div');
+    tree.className = 'tree';
+    tree.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    tree.style.left = `${Math.random() * window.innerWidth}px`;
+    tree.style.top = `${Math.random() * window.innerHeight}px`;
+    body.appendChild(tree);
+
+    let offsetX = 0, offsetY = 0;
+    let dragging = false;
+
+    // Desktop
+    tree.addEventListener('mousedown', e => {
+      dragging = true;
+      offsetX = e.clientX - tree.offsetLeft;
+      offsetY = e.clientY - tree.offsetTop;
+      tree.style.zIndex = 1000;
+    });
+
+    document.addEventListener('mousemove', e => {
+      if (!dragging) return;
+      tree.style.left = `${e.clientX - offsetX}px`;
+      tree.style.top = `${e.clientY - offsetY}px`;
+    });
+
+    document.addEventListener('mouseup', () => {
+      dragging = false;
+      tree.style.zIndex = 1;
+    });
+
+    // Mobile Touch
+    tree.addEventListener('touchstart', e => {
+      if (e.touches.length === 1) {
+        const touch = e.touches[0];
+        offsetX = touch.clientX - tree.offsetLeft;
+        offsetY = touch.clientY - tree.offsetTop;
+        dragging = true;
+        tree.style.zIndex = 1000;
+      }
+    });
+
+    document.addEventListener('touchmove', e => {
+      if (!dragging || e.touches.length !== 1) return;
+      const touch = e.touches[0];
+      tree.style.left = `${touch.clientX - offsetX}px`;
+      tree.style.top = `${touch.clientY - offsetY}px`;
+    });
+
+    document.addEventListener('touchend', () => {
+      dragging = false;
+      tree.style.zIndex = 1;
+    });
+  }
+</script>
+
+</body>
+</html>

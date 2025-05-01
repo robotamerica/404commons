@@ -1,0 +1,33 @@
+[
+    {
+        "url": "seed-template.html",
+        "label": "seed template",
+        "description": "a simple template for your first seed",
+        "hidden": false
+      },
+    {
+        "url": "seed-rainbow-template.html",
+        "label": "seed rainbow template",
+        "description": "a rainbow-styled template for a future seed",
+        "hidden": false
+      },
+      {
+        "url": "hidden-grove.html",
+        "label": "hidden grove",
+        "description": "you've found the hidden grove",
+        "hidden": true
+      },
+      {
+        "url": "grovedigger.html",
+        "label": "grovedigger",
+        "description": "are you a grovedigger?",
+        "hidden": false
+      },
+    {
+      "url": "ghost.html",
+      "label": "ghost.html",
+      "description": "a signal heard once",
+      "hidden": true
+    }
+  ]
+  

@@ -1,0 +1,72 @@
+/* Base reset and layout */
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  
+  body {
+    background: #000;
+    color: #fff;
+    font-family: monospace;
+    padding: 2rem 1.5rem;
+    max-width: 70ch;
+    margin: auto;
+    line-height: 1.6;
+    font-size: 1.05rem;
+  }
+  
+  /* Animated rainbow effect */
+  h1, h2, p, a, li {
+    background: linear-gradient(270deg,
+      #ff0000, #ffa500, #ffff00, #00ff00,
+      #00ffff, #0000ff, #8a2be2, #ff0000);
+    background-size: 200% 200%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rainbow 10s linear infinite;
+  }
+  
+  /* List items */
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  ul li::before {
+    content: "🌈 ";
+    color: #888;
+  }
+  
+  /* Footer */
+  footer {
+    margin-top: 4rem;
+    font-size: 0.9em;
+    color: #aaa;
+    text-align: center;
+    padding-bottom: 2rem;
+    font-family: monospace;
+  }
+  
+  /* Animation */
+  @keyframes rainbow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  /* Mobile responsiveness */
+  @media (max-width: 600px) {
+    body {
+      padding: 1.5rem 1rem;
+      font-size: 1rem;
+    }
+  
+    h1, h2 {
+      font-size: 1.4rem;
+    }
+  }
+  
