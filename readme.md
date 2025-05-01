@@ -44,7 +44,7 @@ Only HTML + CSS.
 If you'd like to add your seed to this Grove:
 
 1. Create a single `.html` file (your seed), keep the file size below 1.5 MB (feel free to use one of the [seed]template.html files).
-2. Host it anywhere — GitHub Pages, Neocities, Surge.
+2. [Host it anywhere](https://github.com/robotamerica/404commons/blob/main/hosting-guide.md) — GitHub Pages, tiiny host, Surge ...
 3. Email your link to 📧 [`seed@404commons.org`](mailto:seed@404commons.org).
 4. If accepted, your seed will be added to the `seeds.json` and listed in random rotating order on `index.html`.
 5. The grove will display a maximum of six random seeds at a time.
