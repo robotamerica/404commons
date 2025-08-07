@@ -28,6 +28,12 @@
       "label": "ghost.html",
       "description": "a signal heard once",
       "hidden": true
+    },
+        {
+      "url": "https://spalmanac.surge.sh/",
+      "label": "the solarpunk almanac",
+      "description": "a solarpunk almanac to inspire",
+      "hidden": false
     }
   ]
   
